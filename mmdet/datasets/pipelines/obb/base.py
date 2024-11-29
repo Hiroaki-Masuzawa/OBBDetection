@@ -218,7 +218,7 @@ class Mask2OBB(object):
                             w = np.linalg.norm(edge1)
                             h = np.linalg.norm(edge2)
                             angle = -np.arctan2(edge1[1], edge1[0])
-                            obbs_tmp.append(np.array([p_c[0], p_c[1], w, h, angle]))
+                            obbs_ann.append(np.array([p_c[0], p_c[1], w, h, angle]))
                         if False :
                             import os
                             import math
@@ -228,7 +228,7 @@ class Mask2OBB(object):
                                 image = cv2.flip(image, 1)
                             if results['v_flip']:
                                 image = cv2.flip(image, 0)
-                            for obb, obb2, mk in zip(obbs, obbs_tmp, mask):
+                            for obb, obb2, mk in zip(obbs, obbs_ann, mask):
                                 rbbox1 = np.int0(cv2.boxPoints(((obb[0], obb[1]), (obb[2], obb[3]), -math.degrees(obb[4]))))
                                 image = cv2.drawContours(image,[rbbox1],0,(0,0,255),2)
                                 rbbox2 = np.int0(cv2.boxPoints(((obb2[0], obb2[1]), (obb2[2], obb2[3]), -math.degrees(obb2[4]))))
@@ -236,7 +236,7 @@ class Mask2OBB(object):
                                 image = cv2.drawContours(image,[np.concatenate(mk, axis=0).astype(np.int32).reshape(-1, 2)],0,(255,0,0),2)
                             cv2.imwrite('debug_img.png', image)
                     # results[obb_k] = obbs
-                    results[obb_k] = obbs_ann
+                    results[obb_k] = np.array(obbs_ann)
                 else :
                     obbs = mask2bbox(mask, self.obb_type)
                     results[obb_k] = obbs
