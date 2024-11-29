@@ -236,6 +236,11 @@ class Mask2OBB(object):
                                 image = cv2.drawContours(image,[np.concatenate(mk, axis=0).astype(np.int32).reshape(-1, 2)],0,(255,0,0),2)
                             cv2.imwrite('debug_img.png', image)
                     # results[obb_k] = obbs
+                    if len(obbs_ann) >= 0:
+                        obbs_ann = np.array(obbs_ann, dtype=np.float32)
+                    else :
+                        obbs_ann = np.zeros((0, 5), dtype=np.float32)
+                    obbs_ann = bt.regular_obb(obbs_ann)
                     results[obb_k] = np.array(obbs_ann)
                 else :
                     obbs = mask2bbox(mask, self.obb_type)
