@@ -1,3 +1,4 @@
 [submodule "BboxToolkit"]
 	path = BboxToolkit
-	url = https://github.com/jbwang1997/BboxToolkit.git
+	url = https://github.com/Hiroaki-Masuzawa/BboxToolkit.git
+	branch = fix_np_type
